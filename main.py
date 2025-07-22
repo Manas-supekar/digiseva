@@ -84,6 +84,33 @@ def show_logo():
             <div style="margin-top: 10px; font-weight: bold; color: #4A9B9B; font-size: 16px;">DigiSeva</div>
         </div>
         """, unsafe_allow_html=True)
+        
+        # About DigiSeva section
+        st.markdown("---")
+        st.markdown("### About DigiSeva")
+        st.markdown("""
+        **DigiSeva** is your trusted digital platform connecting homeowners with verified service professionals.
+        
+        **Our Mission:**
+        Making home services accessible, reliable, and affordable for everyone.
+        
+        **What We Offer:**
+        - 🏠 House Cleaning
+        - 🔧 Plumbing & Repairs  
+        - ⚡ Electrical Services
+        - 🌿 Gardening & Landscaping
+        - ❄️ AC Repair & Maintenance
+        - 🎨 Painting Services
+        - 🪚 Carpentry & Furniture
+        - 📱 Appliance Repairs
+        
+        **Why Choose DigiSeva:**
+        - ⭐ Rated professionals with verified experience
+        - 📍 Location-based service matching
+        - 💰 Transparent pricing
+        - 🛡️ Quality assurance
+        """)
+        st.markdown("---")
 
 def login_page():
     """Login and registration page"""
