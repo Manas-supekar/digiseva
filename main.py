@@ -103,6 +103,7 @@ def show_logo():
         - 🎨 Painting Services
         - 🪚 Carpentry & Furniture
         - 📱 Appliance Repairs
+        - 👨‍🍳 Cooking Service
         
         **Why Choose DigiSeva:**
         - ⭐ Rated professionals with verified experience
