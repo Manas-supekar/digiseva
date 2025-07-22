@@ -40,6 +40,15 @@ def create_tables():
                 rating DECIMAL(3,2) DEFAULT 0.0,
                 experience_years INTEGER DEFAULT 0,
                 availability VARCHAR(20) DEFAULT 'available',
+                full_name VARCHAR(255),
+                bio TEXT,
+                specializations TEXT,
+                certifications TEXT,
+                work_history TEXT,
+                portfolio_links TEXT,
+                hourly_rate DECIMAL(8,2),
+                service_areas TEXT,
+                languages_spoken TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)

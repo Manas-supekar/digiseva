@@ -41,7 +41,9 @@ def get_professionals_by_service(service_id: int) -> List[Tuple]:
             
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT DISTINCT u.id, u.username, u.email, u.location, u.phone, u.rating, u.experience_years, u.availability
+            SELECT DISTINCT u.id, u.username, u.email, u.location, u.phone, u.rating, 
+                   u.experience_years, u.availability, u.full_name, u.bio, u.specializations,
+                   u.hourly_rate, u.service_areas, u.languages_spoken
             FROM users u
             JOIN professional_services ps ON u.id = ps.professional_id
             WHERE ps.service_id = %s AND u.user_type = 'professional' AND ps.available = TRUE

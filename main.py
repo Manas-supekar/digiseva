@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from utils.postgresql_auth import authenticate_user, register_user
+from utils.postgresql_auth import authenticate_user, register_user, get_professional_profile, update_professional_profile
 from utils.postgresql_db_ops import (
     get_all_services, get_professionals_by_service, 
     book_service, get_user_bookings, get_professional_requests,
@@ -144,6 +144,9 @@ def login_page():
     
     with tab2:
         st.subheader("Create New Account")
+        
+        # Basic Information
+        st.markdown("**Basic Information**")
         reg_username = st.text_input("Username", key="reg_username")
         reg_password = st.text_input("Password", type="password", key="reg_password")
         reg_email = st.text_input("Email", key="reg_email")
@@ -151,19 +154,54 @@ def login_page():
         reg_location = st.text_input("Location", key="reg_location")
         reg_user_type = st.selectbox("Account Type", ["customer", "professional"])
         
+        # Professional-specific fields
+        professional_data = {}
+        if reg_user_type == "professional":
+            st.markdown("---")
+            st.markdown("**Professional Information**")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                professional_data['full_name'] = st.text_input("Full Name", key="prof_full_name")
+                professional_data['experience_years'] = st.number_input("Years of Experience", min_value=0, max_value=50, value=1, key="prof_exp")
+                professional_data['hourly_rate'] = st.number_input("Hourly Rate ($)", min_value=10.0, max_value=500.0, value=25.0, step=5.0, key="prof_rate")
+            
+            with col2:
+                professional_data['availability'] = st.selectbox("Availability Status", ["available", "busy", "unavailable"], key="prof_availability")
+                professional_data['languages_spoken'] = st.text_input("Languages Spoken (comma-separated)", placeholder="English, Hindi, Spanish", key="prof_languages")
+                professional_data['service_areas'] = st.text_input("Service Areas (comma-separated)", placeholder="Downtown, Suburbs, City Center", key="prof_areas")
+            
+            professional_data['bio'] = st.text_area("Professional Bio", placeholder="Tell customers about yourself and your expertise...", key="prof_bio")
+            professional_data['specializations'] = st.text_area("Specializations & Skills", placeholder="List your key skills and specializations...", key="prof_skills")
+            professional_data['work_history'] = st.text_area("Work History", placeholder="Previous employers, projects, or relevant experience...", key="prof_history")
+            professional_data['certifications'] = st.text_area("Certifications & Licenses", placeholder="Professional certifications, licenses, or training...", key="prof_certs")
+            professional_data['portfolio_links'] = st.text_area("Portfolio Links", placeholder="Website, social media, or portfolio URLs...", key="prof_portfolio")
+        
         if st.button("Register", type="primary"):
-            if all([reg_username, reg_password, reg_email, reg_phone, reg_location]):
-                success, message = register_user(
-                    reg_username, reg_password, reg_email, 
-                    reg_phone, reg_location, reg_user_type
-                )
-                if success:
-                    st.success(message)
-                    st.info("Please login with your new account")
-                else:
-                    st.error(message)
+            basic_fields = [reg_username, reg_password, reg_email, reg_phone, reg_location]
+            
+            # Validate basic fields
+            if not all(basic_fields):
+                st.error("Please fill in all basic information fields")
+                return
+            
+            # Validate professional fields if professional account
+            if reg_user_type == "professional":
+                required_prof_fields = [professional_data.get('full_name'), professional_data.get('bio')]
+                if not all(required_prof_fields):
+                    st.error("Please fill in Full Name and Bio for professional accounts")
+                    return
+            
+            success, message = register_user(
+                reg_username, reg_password, reg_email, 
+                reg_phone, reg_location, reg_user_type,
+                professional_data if reg_user_type == "professional" else None
+            )
+            if success:
+                st.success(message)
+                st.info("Please login with your new account")
             else:
-                st.error("Please fill in all fields")
+                st.error(message)
 
 def customer_dashboard():
     """Customer dashboard with service booking functionality"""
@@ -224,22 +262,44 @@ def customer_dashboard():
                 if professionals:
                     for prof in professionals:
                         with st.container():
-                            # Create columns for better layout
+                            # Professional card layout
                             col1, col2, col3 = st.columns([2, 1, 1])
                             
                             with col1:
-                                st.markdown(f"**{prof[1].title()}**")
+                                # Display full name if available, otherwise username
+                                display_name = prof[8] if prof[8] else prof[1].title()
+                                st.markdown(f"**{display_name}**")
                                 st.markdown(f"📍 {prof[3]} | 📞 {prof[4]}")
+                                
+                                # Show bio if available
+                                if prof[9]:  # bio
+                                    st.markdown(f"*{prof[9][:100]}{'...' if len(prof[9]) > 100 else ''}*")
+                                
+                                # Show specializations
+                                if prof[10]:  # specializations
+                                    st.markdown(f"**Skills:** {prof[10][:80]}{'...' if len(prof[10]) > 80 else ''}")
                             
                             with col2:
                                 rating_stars = "⭐" * int(prof[5]) + "☆" * (5 - int(prof[5]))
                                 st.markdown(f"**Rating:** {prof[5]}/5.0")
                                 st.markdown(f"{rating_stars}")
+                                
+                                # Show hourly rate if available
+                                if prof[11]:  # hourly_rate
+                                    st.markdown(f"**Rate:** ${prof[11]}/hr")
                             
                             with col3:
                                 availability_color = "🟢" if prof[7] == "available" else "🔴"
                                 st.markdown(f"**Experience:** {prof[6]} years")
                                 st.markdown(f"**Status:** {availability_color} {prof[7].title()}")
+                                
+                                # Show languages if available
+                                if prof[13]:  # languages_spoken
+                                    st.markdown(f"**Languages:** {prof[13]}")
+                            
+                            # Show service areas if available
+                            if prof[12]:  # service_areas
+                                st.markdown(f"**Service Areas:** {prof[12]}")
                             
                             st.markdown("---")
                 else:
@@ -275,7 +335,7 @@ def professional_dashboard():
     # Sidebar navigation
     with st.sidebar:
         st.markdown("---")
-        page = st.selectbox("Navigation", ["Service Requests", "My Services", "Add Service"])
+        page = st.selectbox("Navigation", ["Service Requests", "My Profile", "My Services", "Add Service"])
         st.markdown("---")
         if st.button("Logout"):
             st.session_state.authenticated = False
@@ -311,6 +371,110 @@ def professional_dashboard():
                     st.markdown("---")
         else:
             st.info("No service requests at the moment")
+    
+    elif page == "My Profile":
+        st.subheader("Professional Profile")
+        
+        # Get current professional data
+        profile_data = get_professional_profile(st.session_state.user_id)
+        
+        if profile_data:
+            st.markdown("### Current Profile Information")
+            
+            # Display current profile in a nice format
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                st.markdown(f"**Full Name:** {profile_data.get('full_name', 'Not set')}")
+                st.markdown(f"**Username:** {profile_data.get('username', '')}")
+                st.markdown(f"**Email:** {profile_data.get('email', '')}")
+                st.markdown(f"**Phone:** {profile_data.get('phone', '')}")
+                st.markdown(f"**Location:** {profile_data.get('location', '')}")
+            
+            with col2:
+                st.markdown(f"**Experience:** {profile_data.get('experience_years', 0)} years")
+                st.markdown(f"**Rating:** {profile_data.get('rating', 0.0)}/5.0 ⭐")
+                st.markdown(f"**Hourly Rate:** ${profile_data.get('hourly_rate', 0.0)}")
+                st.markdown(f"**Availability:** {profile_data.get('availability', 'available').title()}")
+                st.markdown(f"**Languages:** {profile_data.get('languages_spoken', 'Not specified')}")
+            
+            st.markdown(f"**Bio:** {profile_data.get('bio', 'No bio provided')}")
+            st.markdown(f"**Specializations:** {profile_data.get('specializations', 'Not specified')}")
+            st.markdown(f"**Service Areas:** {profile_data.get('service_areas', 'Not specified')}")
+            
+            if profile_data.get('work_history'):
+                st.markdown("**Work History:**")
+                st.text_area("", value=profile_data.get('work_history', ''), disabled=True, height=100, key="display_history")
+            
+            if profile_data.get('certifications'):
+                st.markdown("**Certifications:**")
+                st.text_area("", value=profile_data.get('certifications', ''), disabled=True, height=100, key="display_certs")
+            
+            if profile_data.get('portfolio_links'):
+                st.markdown("**Portfolio Links:**")
+                st.text_area("", value=profile_data.get('portfolio_links', ''), disabled=True, height=60, key="display_portfolio")
+            
+            st.markdown("---")
+            
+            # Profile editing form
+            if st.button("Edit Profile"):
+                st.session_state.edit_profile = True
+            
+            if st.session_state.get('edit_profile', False):
+                st.markdown("### Edit Profile")
+                
+                with st.form("edit_profile_form"):
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        new_full_name = st.text_input("Full Name", value=profile_data.get('full_name', ''))
+                        new_experience = st.number_input("Years of Experience", min_value=0, max_value=50, 
+                                                       value=int(profile_data.get('experience_years', 1)))
+                        new_hourly_rate = st.number_input("Hourly Rate ($)", min_value=10.0, max_value=500.0, 
+                                                        value=float(profile_data.get('hourly_rate', 25.0)), step=5.0)
+                    
+                    with col2:
+                        new_availability = st.selectbox("Availability Status", ["available", "busy", "unavailable"], 
+                                                       index=["available", "busy", "unavailable"].index(profile_data.get('availability', 'available')))
+                        new_languages = st.text_input("Languages Spoken", value=profile_data.get('languages_spoken', ''))
+                        new_service_areas = st.text_input("Service Areas", value=profile_data.get('service_areas', ''))
+                    
+                    new_bio = st.text_area("Professional Bio", value=profile_data.get('bio', ''), height=100)
+                    new_specializations = st.text_area("Specializations & Skills", value=profile_data.get('specializations', ''), height=100)
+                    new_work_history = st.text_area("Work History", value=profile_data.get('work_history', ''), height=120)
+                    new_certifications = st.text_area("Certifications", value=profile_data.get('certifications', ''), height=100)
+                    new_portfolio_links = st.text_area("Portfolio Links", value=profile_data.get('portfolio_links', ''), height=80)
+                    
+                    submitted = st.form_submit_button("Update Profile")
+                    
+                    if submitted:
+                        update_data = {
+                            'full_name': new_full_name,
+                            'bio': new_bio,
+                            'specializations': new_specializations,
+                            'certifications': new_certifications,
+                            'work_history': new_work_history,
+                            'portfolio_links': new_portfolio_links,
+                            'hourly_rate': new_hourly_rate,
+                            'service_areas': new_service_areas,
+                            'languages_spoken': new_languages,
+                            'experience_years': new_experience,
+                            'availability': new_availability
+                        }
+                        
+                        success, message = update_professional_profile(st.session_state.user_id, update_data)
+                        if success:
+                            st.success(message)
+                            st.session_state.edit_profile = False
+                            st.rerun()
+                        else:
+                            st.error(message)
+                
+                if st.button("Cancel"):
+                    st.session_state.edit_profile = False
+                    st.rerun()
+        else:
+            st.error("Could not load profile data")
     
     elif page == "My Services":
         st.subheader("Services You Offer")
