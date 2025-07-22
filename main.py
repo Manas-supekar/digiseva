@@ -1,18 +1,22 @@
 import streamlit as st
-import sqlite3
 import os
-from utils.auth import authenticate_user, register_user
-from utils.db_ops import (
+from utils.postgresql_auth import authenticate_user, register_user
+from utils.postgresql_db_ops import (
     get_all_services, get_professionals_by_service, 
     book_service, get_user_bookings, get_professional_requests,
     add_professional_service, get_all_users, get_all_professionals,
     accept_booking, decline_booking
 )
 
-# Initialize database
-if not os.path.exists('db/services.db'):
-    import init_db
-    init_db.initialize_database()
+# Initialize PostgreSQL database
+@st.cache_resource
+def initialize_database():
+    """Initialize PostgreSQL database once"""
+    import postgresql_init
+    return postgresql_init.initialize_postgresql_database()
+
+# Initialize database on first load
+initialize_database()
 
 # Set page config
 st.set_page_config(
