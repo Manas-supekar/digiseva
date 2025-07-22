@@ -192,7 +192,24 @@ def customer_dashboard():
                 if professionals:
                     for prof in professionals:
                         with st.container():
-                            st.markdown(f"**{prof[1]}** - {prof[2]} | 📍 {prof[3]} | 📞 {prof[4]}")
+                            # Create columns for better layout
+                            col1, col2, col3 = st.columns([2, 1, 1])
+                            
+                            with col1:
+                                st.markdown(f"**{prof[1].title()}**")
+                                st.markdown(f"📍 {prof[3]} | 📞 {prof[4]}")
+                            
+                            with col2:
+                                rating_stars = "⭐" * int(prof[5]) + "☆" * (5 - int(prof[5]))
+                                st.markdown(f"**Rating:** {prof[5]}/5.0")
+                                st.markdown(f"{rating_stars}")
+                            
+                            with col3:
+                                availability_color = "🟢" if prof[7] == "available" else "🔴"
+                                st.markdown(f"**Experience:** {prof[6]} years")
+                                st.markdown(f"**Status:** {availability_color} {prof[7].title()}")
+                            
+                            st.markdown("---")
                 else:
                     st.info("No professionals currently available for this service")
         else:
@@ -327,10 +344,39 @@ def admin_dashboard():
         
         professionals = get_all_professionals()
         if professionals:
+            # Create header columns
+            col1, col2, col3, col4, col5 = st.columns([2, 1.5, 1, 1, 1])
+            col1.write("**Name & Contact**")
+            col2.write("**Location**")
+            col3.write("**Rating**")
+            col4.write("**Experience**")
+            col5.write("**Status**")
+            st.markdown("---")
+            
             for prof in professionals:
-                with st.container():
-                    st.write(f"**{prof[1]}** - {prof[2]} | 📍 {prof[4]} | 📞 {prof[3]}")
-                    st.markdown("---")
+                col1, col2, col3, col4, col5 = st.columns([2, 1.5, 1, 1, 1])
+                
+                with col1:
+                    st.write(f"**{prof[1].title()}**")
+                    st.write(f"📧 {prof[2]}")
+                    st.write(f"📞 {prof[3]}")
+                
+                with col2:
+                    st.write(f"📍 {prof[4]}")
+                
+                with col3:
+                    rating_stars = "⭐" * int(prof[5]) + "☆" * (5 - int(prof[5]))
+                    st.write(f"{prof[5]}/5.0")
+                    st.write(rating_stars)
+                
+                with col4:
+                    st.write(f"{prof[6]} years")
+                
+                with col5:
+                    availability_color = "🟢" if prof[7] == "available" else "🔴"
+                    st.write(f"{availability_color} {prof[7].title()}")
+                
+                st.markdown("---")
         else:
             st.info("No professionals registered")
     

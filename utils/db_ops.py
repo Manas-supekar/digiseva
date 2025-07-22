@@ -24,11 +24,11 @@ def get_professionals_by_service(service_id: int) -> List[Tuple]:
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT DISTINCT u.id, u.username, u.email, u.location, u.phone
+            SELECT DISTINCT u.id, u.username, u.email, u.location, u.phone, u.rating, u.experience_years, u.availability
             FROM users u
             JOIN professional_services ps ON u.id = ps.professional_id
             WHERE ps.service_id = ? AND u.user_type = 'professional' AND ps.available = TRUE
-            ORDER BY u.username
+            ORDER BY u.rating DESC, u.experience_years DESC
         """, (service_id,))
         professionals = cursor.fetchall()
         conn.close()
@@ -175,10 +175,10 @@ def get_all_professionals() -> List[Tuple]:
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT id, username, email, phone, location
+            SELECT id, username, email, phone, location, rating, experience_years, availability
             FROM users
             WHERE user_type = 'professional'
-            ORDER BY username
+            ORDER BY rating DESC, username
         """)
         professionals = cursor.fetchall()
         conn.close()

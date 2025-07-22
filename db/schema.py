@@ -20,6 +20,9 @@ def create_tables():
             location TEXT NOT NULL,
             user_type TEXT NOT NULL CHECK (user_type IN ('customer', 'professional', 'admin')),
             password TEXT NOT NULL,
+            rating REAL DEFAULT 0.0,
+            experience_years INTEGER DEFAULT 0,
+            availability TEXT DEFAULT 'available',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
