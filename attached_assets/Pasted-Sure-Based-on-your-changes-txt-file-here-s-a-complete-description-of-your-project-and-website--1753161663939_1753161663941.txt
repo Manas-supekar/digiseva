@@ -1,0 +1,126 @@
+Sure. Based on your `changes.txt` file, here’s a complete **description of your project and website** — both in a technical and functional sense.
+
+---
+
+## 🧾 **Project Overview**
+
+**Title (suggested)**: *Service Directory – A Home Services Web Platform*
+
+---
+
+## 🌐 **What is the Website About?**
+
+It's a **Streamlit-based web application** where users can sign up to request home services (like cleaning, plumbing, electrical, etc.), and professionals can sign up to offer those services. An admin panel also exists to manage the system.
+
+---
+
+## 👥 **Who are the Users?**
+
+1. **Customers (Users)** – to book services
+2. **Professionals** – to offer services
+3. **Admin** – to oversee everything
+
+Each user type sees a different **dashboard** after login.
+
+---
+
+## 💼 **What Can Each User Do?**
+
+### 🔹 1. **Customer Panel** (after signup/login)
+
+* View and book services
+* See list of available professionals in their area
+* (Future idea: Automated pricing based on location and availability)
+
+### 🔹 2. **Professional Panel**
+
+* Register services they offer
+* View service requests in their area
+* Accept or decline bookings
+
+### 🔹 3. **Admin Panel**
+
+* View all users and professionals
+* Manage the database
+* See overall stats (future idea)
+
+---
+
+## 🛠️ **Technical Stack**
+
+| Component     | Tool/Tech                         |
+| ------------- | --------------------------------- |
+| Frontend      | **Streamlit** (Python Web UI)     |
+| Backend       | **SQLite** (via `sqlite3` module) |
+| Auth Logic    | `auth.py` + `db_ops.py`           |
+| DB Schema     | `schema.py`                       |
+| Image Storage | `static/` folder                  |
+
+---
+
+## 📁 **Folder Structure**
+
+```
+service-directory/
+│
+├── db/              → Database logic and file
+│   ├── schema.py         ← Defines tables
+│   └── services.db       ← Actual SQLite DB
+│
+├── utils/
+│   ├── db_ops.py         ← DB functions: insert, fetch, login, etc.
+│   └── auth.py           ← Simplified login/signup logic
+│
+├── static/          → Stores images like logo
+│   └── logo.png
+│
+├── main.py          → Streamlit UI starts here
+└── init_db.py       → One-time DB initializer
+```
+
+---
+
+## 🧠 **Key Features**
+
+* ✅ Login & Signup (user/professional)
+* ✅ Role-based dashboard (User/Professional/Admin)
+* ✅ Database-linked UI
+* ✅ Logo + branding on all pages
+* ✅ Code organized with modular structure
+* 🔜 Automated pricing by location (future)
+* 🔜 Cleaner UI redesign (planned)
+* 🔜 Signout at bottom of sidebar (pending)
+
+---
+
+## 💡 **Unique Value Proposition (UVP) Idea**
+
+You plan to automate pricing based on:
+
+* 📍 User location
+* 👨‍🔧 Professional availability in that location
+
+This gives your app a **1-fold, automated pricing system** (unlike UrbanCompany which uses fixed and negotiable models).
+
+---
+
+## 🎯 Target Inspiration Platforms:
+
+* [UrbanCompany](https://www.urbancompany.com/)
+* [JustLife](https://www.justlife.com/)
+* [Thumbtack](https://www.thumbtack.com/)
+* [Airtasker](https://www.airtasker.com/us/)
+
+---
+
+## 📌 Current Status
+
+* ✅ Basic system working
+* ✅ Login/Signup connected to DB
+* ⚠️ UI redesign pending
+* ⚠️ Professional dashboard improvements needed
+* ⚠️ UVP needs to be finalized
+
+---
+
+Let me know if you’d like a **poster-ready or report-ready version** of this project description.
