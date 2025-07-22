@@ -35,7 +35,7 @@ def initialize_database():
     cursor.execute("""
         INSERT OR IGNORE INTO users (username, password, email, phone, location, user_type) 
         VALUES (?, ?, ?, ?, ?, ?)
-    """, ("admin", "admin123", "admin@homeservices.com", "000-000-0000", "HQ", "admin"))
+    """, ("admin", "admin123", "admin@digiseva.com", "000-000-0000", "HQ", "admin"))
     
     conn.commit()
     conn.close()

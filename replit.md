@@ -1,8 +1,8 @@
-# Home Services Platform
+# DigiSeva - Digital Services Platform
 
 ## Overview
 
-This is a Streamlit-based web application for connecting customers with home service professionals. The platform allows customers to book services, professionals to offer their skills, and administrators to manage the entire system. The application uses SQLite for data storage and provides role-based access control with three distinct user types.
+DigiSeva is a Streamlit-based web application for connecting customers with home service professionals. The platform allows customers to book services, professionals to offer their skills, and administrators to manage the entire system. The application uses SQLite for data storage and provides role-based access control with three distinct user types.
 
 ## User Preferences
 

@@ -1,28 +1,40 @@
 <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background circle -->
-  <circle cx="50" cy="50" r="45" fill="#1f77b4" stroke="#ffffff" stroke-width="2"/>
+  <!-- Outer teal circle -->
+  <circle cx="50" cy="50" r="48" fill="#4A9B9B" stroke="#ffffff" stroke-width="4"/>
   
-  <!-- House icon -->
-  <path d="M30 60 L50 40 L70 60 L70 75 L55 75 L55 65 L45 65 L45 75 L30 75 Z" fill="white"/>
+  <!-- Inner white circle -->
+  <circle cx="50" cy="50" r="38" fill="#ffffff"/>
   
-  <!-- Door -->
-  <rect x="45" y="65" width="10" height="10" fill="#1f77b4"/>
+  <!-- Green background for inner content -->
+  <circle cx="50" cy="50" r="32" fill="#7FB069"/>
   
-  <!-- Windows -->
-  <rect x="35" y="55" width="8" height="6" fill="#1f77b4"/>
-  <rect x="57" y="55" width="8" height="6" fill="#1f77b4"/>
+  <!-- House outline -->
+  <path d="M35 45 L50 32 L65 45 L65 55 L58 55 L58 50 L42 50 L42 55 L35 55 Z" fill="white" stroke="#4A9B9B" stroke-width="1"/>
   
-  <!-- Chimney -->
-  <rect x="60" y="45" width="4" height="8" fill="white"/>
+  <!-- Trees -->
+  <circle cx="30" cy="42" r="4" fill="#2D5A3D"/>
+  <circle cx="32" cy="38" r="3" fill="#2D5A3D"/>
+  <circle cx="70" cy="42" r="4" fill="#2D5A3D"/>
+  <circle cx="68" cy="38" r="3" fill="#2D5A3D"/>
   
-  <!-- Tool icon (wrench) -->
-  <g transform="translate(65, 25) scale(0.8)">
-    <path d="M2 8 L8 2 L10 4 L6 8 L8 10 L2 16 L0 14 L6 8 Z" fill="white"/>
-  </g>
+  <!-- People figures -->
+  <!-- Center person (larger) -->
+  <circle cx="50" cy="65" r="3" fill="#A4D65E"/>
+  <ellipse cx="50" cy="72" rx="4" ry="6" fill="#A4D65E"/>
   
-  <!-- Service indicator dots -->
-  <circle cx="25" cy="25" r="3" fill="white"/>
-  <circle cx="35" cy="20" r="2" fill="white" opacity="0.8"/>
-  <circle cx="75" cy="75" r="3" fill="white"/>
-  <circle cx="80" cy="65" r="2" fill="white" opacity="0.8"/>
+  <!-- Left person -->
+  <circle cx="42" cy="68" r="2.5" fill="#4A9B9B"/>
+  <ellipse cx="42" cy="74" rx="3" ry="5" fill="#4A9B9B"/>
+  
+  <!-- Right person -->
+  <circle cx="58" cy="68" r="2.5" fill="#4A9B9B"/>
+  <ellipse cx="58" cy="74" rx="3" ry="5" fill="#4A9B9B"/>
+  
+  <!-- Far left person -->
+  <circle cx="35" cy="70" r="2" fill="#ffffff"/>
+  <ellipse cx="35" cy="76" rx="2.5" ry="4" fill="#ffffff"/>
+  
+  <!-- Far right person -->
+  <circle cx="65" cy="70" r="2" fill="#ffffff"/>
+  <ellipse cx="65" cy="76" rx="2.5" ry="4" fill="#ffffff"/>
 </svg>

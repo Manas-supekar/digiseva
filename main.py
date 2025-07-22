@@ -16,7 +16,7 @@ if not os.path.exists('db/services.db'):
 
 # Set page config
 st.set_page_config(
-    page_title="Home Services Platform",
+    page_title="DigiSeva",
     page_icon="🏠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -38,11 +38,46 @@ def show_logo():
         st.markdown("""
         <div style="text-align: center; padding: 20px;">
             <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100" height="100" rx="10" fill="#1f77b4"/>
-                <text x="50" y="35" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">HOME</text>
-                <text x="50" y="55" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">SERVICES</text>
-                <circle cx="50" cy="75" r="8" fill="white"/>
+                <!-- Outer teal circle -->
+                <circle cx="50" cy="50" r="48" fill="#4A9B9B" stroke="#ffffff" stroke-width="4"/>
+                
+                <!-- Inner white circle -->
+                <circle cx="50" cy="50" r="38" fill="#ffffff"/>
+                
+                <!-- Green background for inner content -->
+                <circle cx="50" cy="50" r="32" fill="#7FB069"/>
+                
+                <!-- House outline -->
+                <path d="M35 45 L50 32 L65 45 L65 55 L58 55 L58 50 L42 50 L42 55 L35 55 Z" fill="white" stroke="#4A9B9B" stroke-width="1"/>
+                
+                <!-- Trees -->
+                <circle cx="30" cy="42" r="4" fill="#2D5A3D"/>
+                <circle cx="32" cy="38" r="3" fill="#2D5A3D"/>
+                <circle cx="70" cy="42" r="4" fill="#2D5A3D"/>
+                <circle cx="68" cy="38" r="3" fill="#2D5A3D"/>
+                
+                <!-- People figures -->
+                <!-- Center person (larger) -->
+                <circle cx="50" cy="65" r="3" fill="#A4D65E"/>
+                <ellipse cx="50" cy="72" rx="4" ry="6" fill="#A4D65E"/>
+                
+                <!-- Left person -->
+                <circle cx="42" cy="68" r="2.5" fill="#4A9B9B"/>
+                <ellipse cx="42" cy="74" rx="3" ry="5" fill="#4A9B9B"/>
+                
+                <!-- Right person -->
+                <circle cx="58" cy="68" r="2.5" fill="#4A9B9B"/>
+                <ellipse cx="58" cy="74" rx="3" ry="5" fill="#4A9B9B"/>
+                
+                <!-- Far left person -->
+                <circle cx="35" cy="70" r="2" fill="#ffffff"/>
+                <ellipse cx="35" cy="76" rx="2.5" ry="4" fill="#ffffff"/>
+                
+                <!-- Far right person -->
+                <circle cx="65" cy="70" r="2" fill="#ffffff"/>
+                <ellipse cx="65" cy="76" rx="2.5" ry="4" fill="#ffffff"/>
             </svg>
+            <div style="margin-top: 10px; font-weight: bold; color: #4A9B9B; font-size: 16px;">DigiSeva</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -50,7 +85,7 @@ def login_page():
     """Login and registration page"""
     show_logo()
     
-    st.title("🏠 Home Services Platform")
+    st.title("🏠 DigiSeva")
     st.markdown("### Connect with trusted professionals for all your home service needs")
     
     tab1, tab2 = st.tabs(["Login", "Register"])
