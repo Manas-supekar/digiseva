@@ -28,12 +28,16 @@ Each user type sees a different **dashboard** after login.
 
 ### 🔹 1. **Customer Panel** (after signup/login)
 
+* main page: there would be an image on left covering less than half of page and, on the right, there would be a text-"Where do you want your service?", below this there would be a dropdown to choose places from mumbai and navi-mumbai in india, like cst, bandra, etc. after leaving some space there would be a text-"choose a service: ", this will be a dropdown containing all the services, add sufficient dummy data in this. user will write a characters/keywords in this and the dropdown will automatically filter the results simultaneously. after this there would be a procees button.if i scroll down the page, there would be some of our popular services, like "check out some of our popular services".
+* after clicking the proceed button, it should direct to another page, containing "Available (ex. cooks) near you", below it there should be names of providers providing that service, with their name, location, contactno, rating in stars, experince, status. if i click on any one of them a small box would appear in front of the window, containing some reviews from the customers(dummy) about him with some more basic details, edit this accordingly to your choice. there should be a button to click, if someone want to book him. upon clicking, it would direct to another page, where user will be prompted to enter address, contactno, data(user will choose) and select a time(user will choose), after this, there would be a proceed button to proceed to payment options.
 * View and book services
 * See list of available professionals in their area
 * (Future idea: Automated pricing based on location and availability)
 
 ### 🔹 2. **Professional Panel**
 
+* options to edit their infomation, after signup(inside some option). this option should be present somewhere in the sidebar, along with availability status dropdown.
+* when registering, they should tick a box, of i agree with the terms and conditions. after that the register box should be visible. after register, they should be directed to the professional page.
 * Register services they offer
 * View service requests in their area
 * Accept or decline bookings
