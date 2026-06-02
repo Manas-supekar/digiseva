@@ -1,20 +1,20 @@
 import streamlit as st
 import os
-from utils.postgresql_auth import authenticate_user, register_user, get_professional_profile, update_professional_profile
-from utils.postgresql_db_ops import (
-    get_all_services, get_professionals_by_service, 
+
+from utils.auth import authenticate_user, register_user, get_professional_profile, update_professional_profile
+
+from utils.db_ops import (
+    get_all_services, get_professionals_by_service,
     book_service, get_user_bookings, get_professional_requests,
     add_professional_service, get_all_users, get_all_professionals,
     accept_booking, decline_booking
 )
-
 # Initialize PostgreSQL database
 @st.cache_resource
 def initialize_database():
-    """Initialize PostgreSQL database once"""
-    import postgresql_init
-    return postgresql_init.initialize_postgresql_database()
-
+    """Initialize database once"""
+    import init_db
+    return init_db.initialize_database()
 # Initialize database on first load
 initialize_database()
 
