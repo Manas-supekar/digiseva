@@ -9,13 +9,12 @@ from utils.db_ops import (
     add_professional_service, get_all_users, get_all_professionals,
     accept_booking, decline_booking
 )
-# Initialize PostgreSQL database
+
 @st.cache_resource
 def initialize_database():
-    """Initialize database once"""
     import init_db
     return init_db.initialize_database()
-# Initialize database on first load
+
 initialize_database()
 
 # Set page config
